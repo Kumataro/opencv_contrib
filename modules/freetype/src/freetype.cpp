@@ -184,8 +184,9 @@ void FreeType2Impl::putText(
     CV_Assert( ( _line_type == CV_AA) ||
                ( _line_type == 4 ) ||
                ( _line_type == 8 ) );
+    CV_Assert( ( _fontHeight >= 0 ) );
 
-    if ( _text.empty() )
+    if ( ( _text.empty() ) || ( _fontHeight == 0 )  )
     {
          return;
     }
