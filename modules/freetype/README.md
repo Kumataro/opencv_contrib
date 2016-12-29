@@ -1,34 +1,56 @@
-FreeType Module
-===========
+# FreeType Module
 
-This FreeType module allows you to draw strings with outlines and bitmaps.
+This FreeType module allows you to draw UTF-8 strings with outlines or bitmaps.
 
-Installation
------------
-harfbuzz is requested to convert UTF8 to gid(GlyphID).
-freetype library is requested to rasterize given gid.
-
+## Requested Libraries
 harfbuzz https://www.freedesktop.org/wiki/Software/HarfBuzz/
-freetype https://www.freetype.org/
 
-Usage
------------
-cv::freetype::FreeType2 ft2;
-ft2.loadFontData("your-font.ttf", 0);
-ft2.setSplitNumber( 4 ); // Bezier-line is splited by 4 segment.
-ft2.putText(src, .... )
+License information is https://raw.githubusercontent.com/behdad/harfbuzz/master/COPYING .
 
-Option
-------------
-- 2nd argument of loadFontData is used if font file has many font data.
-- 3 drawing mode is available.
--- outline mode is used if lineWidth is larger than 0. (like original putText)
--- bitmap  mode is used if lineWidth is less than 0.
---- 1bit bitmap mode is used if lineStyle is 4 or 8.
---- gray bitmap mode is used if lineStyle is 16.
+freetype https://www.freetype.org/ 
 
-Future work
-------------
-- test
--- CJK and ...
-- RTL,LTR,TTB,BTT...
+License information is https://www.freetype.org/license.html .
+
+## Usage
+    // Create ft2 instance
+    cv::Ptr < cv::freetype::FreeType2 > ft2 = cv::freetype::createFreeType2 ();
+    
+    // load Font Data from filesystem.
+    // 2nd argument is the index of a font data in a font file.
+    ft2->loadFontData ("FONTDATA.TTF", 0);
+    
+    // Set split Number to cubic/conic curve (Option)
+    ft2->setSplitNumber (8);
+    
+    cv::Mat src = cv::Mat::zeros (480, 640, CV_8UC3);
+    
+    // Draw UTF-8 string.
+    ft2->putText (src,                      // Destination
+                  "Hello, World!",          // UTF-8 String
+                  cv::Point(30,30),         // Origin
+                  80,                       // Height
+                  cv::Scalar(255,255,255),  // Color
+                  -1,                       // LineWidth
+                  16,                       // LineStyle
+                  false);                   // Is Origin is LeftBottom 
+
+    cv::imwrite ("output.png", src);
+    return 0;
+
+### Drawing Style (Bitmap/Outline)
+
+| lineWidth | lineStyle |      Result       |
+|:---------:|:---------:|:-----------------:|
+|    >=0    | 4/8/16    |Outline            |
+|    \<0    | 4/8       |Bitmap with 1bit   |
+|    \<0    | 16        |Bitmap with 8bit   |
+
+## Future work
+- Add test (CJK)
+- Validation UTF-8 strings.
+- Get a string BBox.
+- Load a fontdata on memory.
+- Support freetype/harfbuzz libraries which are not managed with pkg-config.
+- Support Windows with NuGet Environment ( Optional )
+- Glyph Cache ( Optional )
+- Support text-direction option (Top to Bottom, Right to Left ...) ( Optional )
