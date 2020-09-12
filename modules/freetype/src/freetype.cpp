@@ -234,29 +234,34 @@ void FreeType2Impl::putTextOutline(
    int _fontHeight, Scalar _color,
    int _thickness, int _line_type, bool _bottomLeftOrigin )
 {
+
+    // Create hb_buffer and store _text.
     hb_buffer_t *hb_buffer = hb_buffer_create ();
     CV_Assert( hb_buffer != NULL );
-
-    unsigned int textLen;
-    hb_buffer_guess_segment_properties (hb_buffer);
     hb_buffer_add_utf8 (hb_buffer, _text.c_str(), -1, 0, -1);
 
+    // Guess directions and language.
+    hb_buffer_guess_segment_properties (hb_buffer);
+
+    // Shape it.
+    hb_shape (mHb_font, hb_buffer, NULL, 0);
+
+    // Get glyph informaion and textLength about shaped text.
+    unsigned int textLen;
     hb_glyph_info_t *info =
         hb_buffer_get_glyph_infos(hb_buffer,&textLen );
     CV_Assert( info != NULL );
-
-    hb_shape (mHb_font, hb_buffer, NULL, 0);
 
     if( _bottomLeftOrigin == true ){
         _org.y -= _fontHeight;
     }
 
+    // Iterate all glyphs
     PathUserData *userData = new PathUserData( _img );
     userData->mColor     = _color;
     userData->mCtoL      = mCtoL;
     userData->mThickness = _thickness;
     userData->mLine_type = _line_type;
-
     for( unsigned int i = 0 ; i < textLen ; i ++ ){
         CV_Assert(!FT_Load_Glyph(mFace, info[i].codepoint, 0 ));
 
@@ -286,6 +291,8 @@ void FreeType2Impl::putTextOutline(
         _org.y += ( mFace->glyph->advance.y ) >> 6;
    }
    delete userData;
+
+   /// Destroy hb_buffer
    hb_buffer_destroy (hb_buffer);
 }
 
@@ -298,17 +305,23 @@ void FreeType2Impl::putTextBitmapMono(
     CV_Assert( _line_type == 4 || _line_type == 8);
 
     Mat dst = _img.getMat();
+
+    // Create hb_buffer and store _text.
     hb_buffer_t *hb_buffer = hb_buffer_create ();
     CV_Assert( hb_buffer != NULL );
-
-    unsigned int textLen;
-    hb_buffer_guess_segment_properties (hb_buffer);
     hb_buffer_add_utf8 (hb_buffer, _text.c_str(), -1, 0, -1);
+
+    // Guess directions and language.
+    hb_buffer_guess_segment_properties (hb_buffer);
+
+    // Shape it.
+    hb_shape (mHb_font, hb_buffer, NULL, 0);
+
+    // Get glyph informaion and textLength about shaped text.
+    unsigned int textLen;
     hb_glyph_info_t *info =
         hb_buffer_get_glyph_infos(hb_buffer,&textLen );
     CV_Assert( info != NULL );
-
-    hb_shape (mHb_font, hb_buffer, NULL, 0);
 
     _org.y += _fontHeight;
     if( _bottomLeftOrigin == true ){
@@ -372,17 +385,23 @@ void FreeType2Impl::putTextBitmapBlend(
     CV_Assert( _line_type == 16 );
 
     Mat dst = _img.getMat();
+
+    // Create hb_buffer and store _text.
     hb_buffer_t *hb_buffer = hb_buffer_create ();
     CV_Assert( hb_buffer != NULL );
-
-    unsigned int textLen;
-    hb_buffer_guess_segment_properties (hb_buffer);
     hb_buffer_add_utf8 (hb_buffer, _text.c_str(), -1, 0, -1);
+
+    // Guess directions and language.
+    hb_buffer_guess_segment_properties (hb_buffer);
+
+    // Shape it.
+    hb_shape (mHb_font, hb_buffer, NULL, 0);
+
+    // Get glyph informaion and textLength about shaped text.
+    unsigned int textLen;
     hb_glyph_info_t *info =
         hb_buffer_get_glyph_infos(hb_buffer,&textLen );
     CV_Assert( info != NULL );
-
-    hb_shape (mHb_font, hb_buffer, NULL, 0);
 
     _org.y += _fontHeight;
     if( _bottomLeftOrigin == true ){
@@ -453,17 +472,23 @@ Size FreeType2Impl::getTextSize(
 
     CV_Assert(!FT_Set_Pixel_Sizes( mFace, _fontHeight, _fontHeight ));
 
+    // Create hb_buffer and store _text.
     hb_buffer_t *hb_buffer = hb_buffer_create ();
     CV_Assert( hb_buffer != NULL );
     Point _org(0,0);
-
-    unsigned int textLen;
-    hb_buffer_guess_segment_properties (hb_buffer);
     hb_buffer_add_utf8 (hb_buffer, _text.c_str(), -1, 0, -1);
+
+    // Guess directions and language.
+    hb_buffer_guess_segment_properties (hb_buffer);
+
+    // Shape it.
+    hb_shape (mHb_font, hb_buffer, NULL, 0);
+
+    // Get glyph informaion and textLength about shaped text.
+    unsigned int textLen;
     hb_glyph_info_t *info =
         hb_buffer_get_glyph_infos(hb_buffer,&textLen );
     CV_Assert( info != NULL );
-    hb_shape (mHb_font, hb_buffer, NULL, 0);
 
     _org.y -= _fontHeight;
     int xMin = INT_MAX, xMax = INT_MIN;
