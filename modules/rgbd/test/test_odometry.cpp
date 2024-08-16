@@ -58,7 +58,7 @@ void warpFrame(const Mat& image, const Mat& depth, const Mat& rvec, const Mat& t
     {
         for(int x = 0; x < cloud.cols; x++)
         {
-            Point p = warpedImagePoints.at<Point2f>(y,x);
+            Point p = static_cast<cv::Point>(warpedImagePoints.at<Point2f>(y,x));
             if(r.contains(p))
             {
                 float curDepth = warpedDepth.at<float>(p.y, p.x);

@@ -64,7 +64,7 @@ namespace cv {namespace ximgproc {
         for (int _col = 0; _col < _col_num; _col++) {
             // rotate the source by _t
             _t = (start_angle + _col * theta);
-            cv::Mat _r_matrix = cv::getRotationMatrix2D(_center, _t, 1);
+            cv::Mat _r_matrix = cv::getRotationMatrix2D(static_cast<cv::Point2f>(_center), _t, 1);
             cv::warpAffine(_masked_src, _rotated_src, _r_matrix, _masked_src.size());
             Mat _col_mat = _radon.col(_col);
             // make projection

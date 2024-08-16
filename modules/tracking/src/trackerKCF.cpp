@@ -297,21 +297,21 @@ private:
       // extract and pre-process the patch
       // get non compressed descriptors
       for(unsigned i=0;i<descriptors_npca.size()-extractor_npca.size();i++){
-        if(!getSubWindow(img,roi, features_npca[i], img_Patch, descriptors_npca[i]))return false;
+        if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_npca[i], img_Patch, descriptors_npca[i]))return false;
       }
       //get non-compressed custom descriptors
       for(unsigned i=0,j=(unsigned)(descriptors_npca.size()-extractor_npca.size());i<extractor_npca.size();i++,j++){
-        if(!getSubWindow(img,roi, features_npca[j], extractor_npca[i]))return false;
+        if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_npca[j], extractor_npca[i]))return false;
       }
       if(features_npca.size()>0)merge(features_npca,X[1]);
 
       // get compressed descriptors
       for(unsigned i=0;i<descriptors_pca.size()-extractor_pca.size();i++){
-        if(!getSubWindow(img,roi, features_pca[i], img_Patch, descriptors_pca[i]))return false;
+        if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_pca[i], img_Patch, descriptors_pca[i]))return false;
       }
       //get compressed custom descriptors
       for(unsigned i=0,j=(unsigned)(descriptors_pca.size()-extractor_pca.size());i<extractor_pca.size();i++,j++){
-        if(!getSubWindow(img,roi, features_pca[j], extractor_pca[i]))return false;
+        if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_pca[j], extractor_pca[i]))return false;
       }
       if(features_pca.size()>0)merge(features_pca,X[0]);
 
@@ -369,21 +369,21 @@ private:
     // extract the patch for learning purpose
     // get non compressed descriptors
     for(unsigned i=0;i<descriptors_npca.size()-extractor_npca.size();i++){
-      if(!getSubWindow(img,roi, features_npca[i], img_Patch, descriptors_npca[i]))return false;
+      if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_npca[i], img_Patch, descriptors_npca[i]))return false;
     }
     //get non-compressed custom descriptors
     for(unsigned i=0,j=(unsigned)(descriptors_npca.size()-extractor_npca.size());i<extractor_npca.size();i++,j++){
-      if(!getSubWindow(img,roi, features_npca[j], extractor_npca[i]))return false;
+      if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_npca[j], extractor_npca[i]))return false;
     }
     if(features_npca.size()>0)merge(features_npca,X[1]);
 
     // get compressed descriptors
     for(unsigned i=0;i<descriptors_pca.size()-extractor_pca.size();i++){
-      if(!getSubWindow(img,roi, features_pca[i], img_Patch, descriptors_pca[i]))return false;
+      if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_pca[i], img_Patch, descriptors_pca[i]))return false;
     }
     //get compressed custom descriptors
     for(unsigned i=0,j=(unsigned)(descriptors_pca.size()-extractor_pca.size());i<extractor_pca.size();i++,j++){
-      if(!getSubWindow(img,roi, features_pca[j], extractor_pca[i]))return false;
+      if(!getSubWindow(img,static_cast<cv::Rect>(roi), features_pca[j], extractor_pca[i]))return false;
     }
     if(features_pca.size()>0)merge(features_pca,X[0]);
 

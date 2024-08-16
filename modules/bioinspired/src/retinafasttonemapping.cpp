@@ -191,7 +191,7 @@ void _convertValarrayBuffer2cvMat(const std::valarray<float> &grayMatrixToConver
             for (unsigned int j=0;j<nbColumns;++j)
             {
                 cv::Point2d pixel(j,i);
-                outMat.at<unsigned char>(pixel)=(unsigned char)*(valarrayPTR++);
+                outMat.at<unsigned char>(static_cast<cv::Point>(pixel))=(unsigned char)*(valarrayPTR++);
             }
         }
     }
@@ -211,7 +211,7 @@ void _convertValarrayBuffer2cvMat(const std::valarray<float> &grayMatrixToConver
                 pixelValues[1]=(unsigned char)*(valarrayPTR+nbPixels);
                 pixelValues[0]=(unsigned char)*(valarrayPTR+doubleNBpixels);
 
-                outMat.at<cv::Vec3b>(pixel)=pixelValues;
+                outMat.at<cv::Vec3b>(static_cast<cv::Point>(pixel))=pixelValues;
             }
         }
     }

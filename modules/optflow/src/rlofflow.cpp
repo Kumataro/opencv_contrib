@@ -171,7 +171,7 @@ public:
         {
             for (unsigned int n = 0; n < prevPoints.size(); n++)
             {
-                dense_flow.at<Point2f>(prevPoints[n]) = currPoints[n] - prevPoints[n];
+                dense_flow.at<Point2f>(static_cast<cv::Point>(prevPoints[n])) = currPoints[n] - prevPoints[n];
             }
             return;
         }

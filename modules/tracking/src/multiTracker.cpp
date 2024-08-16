@@ -407,7 +407,7 @@ namespace impl {
 				tld::TLDDetector::LabeledPatch labPatch;
 				double curScale = pow(tld::SCALE_STEP, ensScaleIDs[k][i]);
 				labPatch.rect = Rect2d(ensBuffer[k][i].x*curScale, ensBuffer[k][i].y*curScale, initSize.width * curScale, initSize.height * curScale);
-				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(ensBuffer[k][i], initSize), standardPatch);
+				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(static_cast<cv::Point2d>(ensBuffer[k][i]), initSize), standardPatch);
 
 				double srValue, scValue;
 				srValue = tldModel->detector->Sr(standardPatch);
@@ -595,7 +595,7 @@ namespace impl {
 			uchar *patchesData = stdPatches.data;
 			for (int i = 0; i < (int)ensBuffer.size(); i++)
 			{
-				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(ensBuffer[k][i], initSize), standardPatch);
+				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(static_cast<cv::Point2d>(ensBuffer[k][i]), initSize), standardPatch);
 				uchar *stdPatchData = standardPatch.data;
 				for (int j = 0; j < 225; j++)
 					patchesData[225 * i + j] = stdPatchData[j];
@@ -609,7 +609,7 @@ namespace impl {
 				standardPatch.data = &stdPatches.data[225 * i];
 				double curScale = pow(tld::SCALE_STEP, ensScaleIDs[k][i]);
 				labPatch.rect = Rect2d(ensBuffer[k][i].x*curScale, ensBuffer[k][i].y*curScale, initSize.width * curScale, initSize.height * curScale);
-				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(ensBuffer[k][i], initSize), standardPatch);
+				tld::resample(resized_imgs[ensScaleIDs[k][i]], Rect2d(static_cast<cv::Point2d>(ensBuffer[k][i]), initSize), standardPatch);
 
 				double srValue, scValue;
 				srValue = resultSr[i];

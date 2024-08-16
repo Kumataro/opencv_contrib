@@ -255,8 +255,8 @@ Mat interpolate_irregular_knn(
     {
         if (_prevPoints[n].x >= 0 && _prevPoints[n].y >= 0 && _prevPoints[n].x < color_img.cols && _prevPoints[n].y < color_img.rows)
         {
-            in.at<Point2f>(_prevPoints[n]) = _nextPoints[n] - _prevPoints[n];
-            mask.at<uchar>(_prevPoints[n]) = status[n];
+            in.at<Point2f>(static_cast<cv::Point>(_prevPoints[n])) = _nextPoints[n] - _prevPoints[n];
+            mask.at<uchar>(static_cast<cv::Point>(_prevPoints[n])) = status[n];
         }
 
     }

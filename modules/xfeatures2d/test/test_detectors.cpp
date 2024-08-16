@@ -64,7 +64,7 @@ CV_DetectorsTest::~CV_DetectorsTest() {}
 void getRotation(const Mat& img, Mat& aff, Mat& out)
 {
     Point center(img.cols/2, img.rows/2);
-    aff = getRotationMatrix2D(center, 30, 1);
+    aff = getRotationMatrix2D(static_cast<cv::Point2f>(center), 30, 1);
     warpAffine( img, out, aff, img.size());
 }
 

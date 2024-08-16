@@ -93,7 +93,7 @@ std::vector <TrainingSample> gatherFrameSamples(Mat prevFrame, Mat currFrame, Re
 
     copyMakeBorder(prevFrame, prevFramePadded, (int)targetPatchRect.height, (int)targetPatchRect.height, (int)targetPatchRect.width, (int)targetPatchRect.width, BORDER_REPLICATE);
 
-    targetPatch = prevFramePadded(targetPatchRect);
+    targetPatch = prevFramePadded(static_cast<cv::Rect>(targetPatchRect));
 
 
     for (int i = 0; i < samplesInFrame; i++)
@@ -123,7 +123,7 @@ std::vector <TrainingSample> gatherFrameSamples(Mat prevFrame, Mat currFrame, Re
         searchPatchRect.x = (float)(currCenter.x + dx - searchPatchRect.width / 2.0 + searchPatchRect.width);
         searchPatchRect.y = (float)(currCenter.y + dy - searchPatchRect.height / 2.0 + searchPatchRect.height);
         copyMakeBorder(currFrame, currFramePadded, (int)searchPatchRect.height, (int)searchPatchRect.height, (int)searchPatchRect.width, (int)searchPatchRect.width, BORDER_REPLICATE);
-        searchPatch = currFramePadded(searchPatchRect);
+        searchPatch = currFramePadded(static_cast<cv::Rect>(searchPatchRect));
 
         //Calculate Relative GTBB in search patch
         Rect2f relGTBB;

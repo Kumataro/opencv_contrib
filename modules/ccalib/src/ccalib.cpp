@@ -349,10 +349,10 @@ bool CustomPattern::findPatternPass(const Mat& image, vector<Point2f>& matched_f
         Mat out;
         drawMatches(image, f_keypoints, img_roi, keypoints, good_matches, out);
         // Draw lines between the corners (the mapped object in the scene - image_2 )
-        line(out, scene_corners[0], scene_corners[1], Scalar(0, 255, 0), 2);
-        line(out, scene_corners[1], scene_corners[2], Scalar(0, 255, 0), 2);
-        line(out, scene_corners[2], scene_corners[3], Scalar(0, 255, 0), 2);
-        line(out, scene_corners[3], scene_corners[0], Scalar(0, 255, 0), 2);
+        line(out, static_cast<cv::Point>(scene_corners[0]), static_cast<cv::Point>(scene_corners[1]), Scalar(0, 255, 0), 2);
+        line(out, static_cast<cv::Point>(scene_corners[1]), static_cast<cv::Point>(scene_corners[2]), Scalar(0, 255, 0), 2);
+        line(out, static_cast<cv::Point>(scene_corners[2]), static_cast<cv::Point>(scene_corners[3]), Scalar(0, 255, 0), 2);
+        line(out, static_cast<cv::Point>(scene_corners[3]), static_cast<cv::Point>(scene_corners[0]), Scalar(0, 255, 0), 2);
         out.copyTo(output);
     }
 
@@ -481,9 +481,9 @@ void CustomPattern::drawOrientation(InputOutputArray image, InputArray tvec, Inp
     projectPoints(axis, rvec, tvec, cameraMatrix, distCoeffs, proj_axis);
 
     Mat img = image.getMat();
-    line(img, proj_axis[0], proj_axis[1], Scalar(0, 0, 255), axis_width); // red
-    line(img, proj_axis[0], proj_axis[2], Scalar(0, 255, 0), axis_width); // green
-    line(img, proj_axis[0], proj_axis[3], Scalar(255, 0, 0), axis_width); // blue
+    line(img, static_cast<cv::Point>(proj_axis[0]), static_cast<cv::Point>(proj_axis[1]), Scalar(0, 0, 255), axis_width); // red
+    line(img, static_cast<cv::Point>(proj_axis[0]), static_cast<cv::Point>(proj_axis[2]), Scalar(0, 255, 0), axis_width); // green
+    line(img, static_cast<cv::Point>(proj_axis[0]), static_cast<cv::Point>(proj_axis[3]), Scalar(255, 0, 0), axis_width); // blue
 
     img.copyTo(image);
 }

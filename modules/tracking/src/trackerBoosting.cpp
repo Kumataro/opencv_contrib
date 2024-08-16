@@ -142,11 +142,11 @@ bool TrackerBoostingImpl::initImpl( const Mat& image, const Rect2d& boundingBox 
     return false;
 
   CSSampler.staticCast<TrackerSamplerCS>()->setMode( TrackerSamplerCS::MODE_POSITIVE );
-  sampler->sampling( intImage, boundingBox );
+  sampler->sampling( intImage, static_cast<cv::Rect>(boundingBox) );
   const std::vector<Mat> posSamples = sampler->getSamples();
 
   CSSampler.staticCast<TrackerSamplerCS>()->setMode( TrackerSamplerCS::MODE_NEGATIVE );
-  sampler->sampling( intImage, boundingBox );
+  sampler->sampling( intImage, static_cast<cv::Rect>(boundingBox) );
   const std::vector<Mat> negSamples = sampler->getSamples();
 
   if( posSamples.empty() || negSamples.empty() )
@@ -169,7 +169,7 @@ bool TrackerBoostingImpl::initImpl( const Mat& image, const Rect2d& boundingBox 
   const std::vector<Mat> negResponse = featureSet->getResponses();
 
   //Model
-  model = Ptr<TrackerBoostingModel>( new TrackerBoostingModel( boundingBox ) );
+  model = Ptr<TrackerBoostingModel>( new TrackerBoostingModel( static_cast<cv::Rect>(boundingBox) ) );
   Ptr<TrackerStateEstimatorAdaBoosting> stateEstimator = Ptr<TrackerStateEstimatorAdaBoosting>(
       new TrackerStateEstimatorAdaBoosting( params.numClassifiers, params.iterationInit, params.featureSetNumFeatures,
                                             Size( static_cast<int>(boundingBox.width), static_cast<int>(boundingBox.height) ), ROI ) );
@@ -261,8 +261,8 @@ bool TrackerBoostingImpl::updateImpl( const Mat& image, Rect2d& boundingBox )
   }
 
   Ptr<TrackerTargetState> currentState = model->getLastTargetState();
-  boundingBox = Rect( (int)currentState->getTargetPosition().x, (int)currentState->getTargetPosition().y, currentState->getTargetWidth(),
-                      currentState->getTargetHeight() );
+  boundingBox = static_cast<cv::Rect2d>( Rect( (int)currentState->getTargetPosition().x, (int)currentState->getTargetPosition().y, currentState->getTargetWidth(),
+                      currentState->getTargetHeight() ));
 
   /*//TODO debug
    rectangle( f, lastBoundingBox, Scalar( 0, 255, 0 ), 1 );
@@ -273,12 +273,12 @@ bool TrackerBoostingImpl::updateImpl( const Mat& image, Rect2d& boundingBox )
   //sampling new frame based on new location
   //Positive sampling
   ( sampler->getSamplers().at( 0 ).second ).staticCast<TrackerSamplerCS>()->setMode( TrackerSamplerCS::MODE_POSITIVE );
-  sampler->sampling( intImage, boundingBox );
+  sampler->sampling( intImage, static_cast<cv::Rect>(boundingBox) );
   const std::vector<Mat> posSamples = sampler->getSamples();
 
   //Negative sampling
   ( sampler->getSamplers().at( 0 ).second ).staticCast<TrackerSamplerCS>()->setMode( TrackerSamplerCS::MODE_NEGATIVE );
-  sampler->sampling( intImage, boundingBox );
+  sampler->sampling( intImage, static_cast<cv::Rect>(boundingBox) );
   const std::vector<Mat> negSamples = sampler->getSamples();
 
   if( posSamples.empty() || negSamples.empty() )

@@ -179,10 +179,10 @@ void TRACK_alovImpl::loadDataset(const string &rootPath)
                 currObj->imagePath = fullPath;
                 currObj->id = currFrameID;
 
-                currObj->gtbb.push_back(Point2d(0, 0));
-                currObj->gtbb.push_back(Point2d(0, 0));
-                currObj->gtbb.push_back(Point2d(0, 0));
-                currObj->gtbb.push_back(Point2d(0, 0));
+                currObj->gtbb.push_back(Point2f(0, 0));
+                currObj->gtbb.push_back(Point2f(0, 0));
+                currObj->gtbb.push_back(Point2f(0, 0));
+                currObj->gtbb.push_back(Point2f(0, 0));
 
                 //Add object to storage
                 objects.push_back(currObj);
@@ -232,10 +232,10 @@ void TRACK_alovImpl::loadDataset(const string &rootPath)
                 Ptr<TRACK_alovObj> currObj = data[currDatasetID-1][n-1];
 
                 currObj->gtbb.clear();
-                currObj->gtbb.push_back(Point2d(x1, y1));
-                currObj->gtbb.push_back(Point2d(x2, y2));
-                currObj->gtbb.push_back(Point2d(x3, y3));
-                currObj->gtbb.push_back(Point2d(x4, y4));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x1, y1)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x2, y2)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x3, y3)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x4, y4)));
 
             } while (annoList.good());
         }
@@ -287,10 +287,10 @@ void TRACK_alovImpl::loadDatasetAnnotatedOnly(const string &rootPath)
                 std::istringstream in(tmp);
                 in >> n >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4;
 
-                currObj->gtbb.push_back(Point2d(x1, y1));
-                currObj->gtbb.push_back(Point2d(x2, y2));
-                currObj->gtbb.push_back(Point2d(x3, y3));
-                currObj->gtbb.push_back(Point2d(x4, y4));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x1, y1)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x2, y2)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x3, y3)));
+                currObj->gtbb.push_back(static_cast<cv::Point2f>(Point2d(x4, y4)));
 
                 string fullPath = fullFramePath(rootPath, i, k, n);
                 if (!fileExists(fullPath))

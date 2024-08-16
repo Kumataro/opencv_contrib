@@ -88,7 +88,7 @@ static float calcRMSE(vector<Point2f> prevPts, vector<Point2f> currPts, Mat flow
     vector<float> ee;
     for (unsigned int n = 0; n < prevPts.size(); n++)
     {
-        Point2f gtFlow = flow.at<Point2f>(prevPts[n]);
+        Point2f gtFlow = flow.at<Point2f>(static_cast<cv::Point>(prevPts[n]));
         if (isFlowCorrect(gtFlow.x) && isFlowCorrect(gtFlow.y))
         {
             Point2f diffFlow = (currPts[n] - prevPts[n]) - gtFlow;

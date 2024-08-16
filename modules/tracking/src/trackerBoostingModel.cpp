@@ -113,7 +113,7 @@ void TrackerBoostingModel::responseToConfidenceMap( const std::vector<Mat>& resp
     //create the state
     Ptr<TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState> currentState = Ptr<
         TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState>(
-        new TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState( currentOfs, currentSample.at( i ).cols, currentSample.at( i ).rows,
+        new TrackerStateEstimatorAdaBoosting::TrackerAdaBoostingTargetState( static_cast<cv::Point2f>(currentOfs), currentSample.at( i ).cols, currentSample.at( i ).rows,
                                                                              foreground, resp ) );
 
     confidenceMap.push_back( std::make_pair( currentState, 0.0f ) );

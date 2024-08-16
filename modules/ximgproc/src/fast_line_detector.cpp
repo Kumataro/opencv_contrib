@@ -132,7 +132,7 @@ void FastLineDetectorImpl::drawSegments(InputOutputArray image, InputArray lines
         const Vec4f& v = _lines.at<Vec4f>(i);
         Point2f b(v[0], v[1]);
         Point2f e(v[2], v[3]);
-        line(image, b, e, linecolor, linethickness);
+        line(image, static_cast<cv::Point>(b), static_cast<cv::Point>(e), linecolor, linethickness);
         if(draw_arrow)
         {
             SEGMENT seg;

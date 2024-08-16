@@ -87,8 +87,8 @@ int main(int argc, char *argv[])
 		//Draw Ground Truth BB
 		vector <Point2d> gtPoints =  dataset->getGT();
 		for (int j = 0; j < (int)(gtPoints.size()-1); j++)
-			line(frame, gtPoints[j], gtPoints[j + 1], Scalar(0, 255, 0), 2);
-		line(frame, gtPoints[0], gtPoints[(int)(gtPoints.size()-1)], Scalar(0, 255, 0), 2);
+			line(frame, static_cast<cv::Point>(gtPoints[j]), static_cast<cv::Point>(gtPoints[j + 1]), Scalar(0, 255, 0), 2);
+		line(frame, static_cast<cv::Point>(gtPoints[0]), static_cast<cv::Point>(gtPoints[(int)(gtPoints.size()-1)]), Scalar(0, 255, 0), 2);
 
 		imshow("VOT 2015 DATASET TEST...", frame);
 		waitKey(100);

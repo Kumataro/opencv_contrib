@@ -100,14 +100,14 @@ void drawLineMatches( const Mat& img1, const std::vector<KeyLine>& keylines1, co
     {
       KeyLine k1 = keylines1[i];
       //line( outImg, Point2f( k1.startPointX, k1.startPointY ), Point2f( k1.endPointX, k1.endPointY ), singleLineColorRGB, 2 );
-      line( outImg, Point2f( k1.sPointInOctaveX, k1.sPointInOctaveY ), Point2f( k1.ePointInOctaveX, k1.ePointInOctaveY ), singleLineColorRGB, 2 );
+      line( outImg, static_cast<cv::Point>(Point2f( k1.sPointInOctaveX, k1.sPointInOctaveY )), static_cast<cv::Point>(Point2f( k1.ePointInOctaveX, k1.ePointInOctaveY )), singleLineColorRGB, 2 );
 
     }
 
     for ( size_t j = 0; j < keylines2.size(); j++ )
     {
       KeyLine k2 = keylines2[j];
-      line( outImg, Point2f( k2.sPointInOctaveX + offset, k2.sPointInOctaveY ), Point2f( k2.ePointInOctaveX + offset, k2.ePointInOctaveY ), singleLineColorRGB, 2 );
+      line( outImg, static_cast<cv::Point>(Point2f( k2.sPointInOctaveX + offset, k2.sPointInOctaveY )), static_cast<cv::Point>(Point2f( k2.ePointInOctaveX + offset, k2.ePointInOctaveY )), singleLineColorRGB, 2 );
     }
   }
 
@@ -145,13 +145,13 @@ void drawLineMatches( const Mat& img1, const std::vector<KeyLine>& keylines1, co
 //      /* link correspondent lines */
 //      line( outImg, Point2f( left.startPointX, left.startPointY ), Point2f( right.startPointX + offset, right.startPointY ), matchColorRGB, 1 );
 
-      line( outImg, Point2f( left.sPointInOctaveX, left.sPointInOctaveY ), Point2f( left.ePointInOctaveX, left.ePointInOctaveY ), singleLineColorRGB, 2 );
+      line( outImg, static_cast<cv::Point>(Point2f( left.sPointInOctaveX, left.sPointInOctaveY )), static_cast<cv::Point>(Point2f( left.ePointInOctaveX, left.ePointInOctaveY )), singleLineColorRGB, 2 );
 
-        line( outImg, Point2f( right.sPointInOctaveX + offset, right.sPointInOctaveY ), Point2f( right.ePointInOctaveX + offset, right.ePointInOctaveY ), singleLineColorRGB,
+        line( outImg, static_cast<cv::Point>(Point2f( right.sPointInOctaveX + offset, right.sPointInOctaveY )), static_cast<cv::Point>(Point2f( right.ePointInOctaveX + offset, right.ePointInOctaveY )), singleLineColorRGB,
               2 );
 
         /* link correspondent lines */
-        line( outImg, Point2f( left.sPointInOctaveX, left.sPointInOctaveY ), Point2f( right.sPointInOctaveX + offset, right.sPointInOctaveY ), matchColorRGB, 1 );
+        line( outImg, static_cast<cv::Point>(Point2f( left.sPointInOctaveX, left.sPointInOctaveY )), static_cast<cv::Point>(Point2f( right.sPointInOctaveX + offset, right.sPointInOctaveY )), matchColorRGB, 1 );
     }
   }
 }
@@ -182,7 +182,7 @@ void drawKeylines( const Mat& image, const std::vector<KeyLine>& keylines, Mat& 
     KeyLine k = keylines[i];
 
     /* draw line */
-    line( outImage, Point2f( k.startPointX, k.startPointY ), Point2f( k.endPointX, k.endPointY ), lineColor, 1 );
+    line( outImage, static_cast<cv::Point>(Point2f( k.startPointX, k.startPointY )), static_cast<cv::Point>(Point2f( k.endPointX, k.endPointY )), lineColor, 1 );
   }
 }
 

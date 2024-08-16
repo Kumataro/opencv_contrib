@@ -156,7 +156,7 @@ protected:
         size.height = h;
 
         Mat window;
-        getRectSubPix(img, size, center, window);
+        getRectSubPix(img, size, static_cast<cv::Point2f>(center), window);
         createHanningWindow(hanWin, size, CV_32F);
 
         // goal
@@ -193,7 +193,7 @@ protected:
             return false;
 
         Mat image_sub;
-        getRectSubPix(image, size, center, image_sub);
+        getRectSubPix(image, size, static_cast<cv::Point2f>(center), image_sub);
 
         if (image_sub.channels() != 1)
             cvtColor(image_sub, image_sub, COLOR_BGR2GRAY);
@@ -209,7 +209,7 @@ protected:
         center.y += delta_xy.y;
 
         Mat img_sub_new;
-        getRectSubPix(image, size, center, img_sub_new);
+        getRectSubPix(image, size, static_cast<cv::Point2f>(center), img_sub_new);
         if (img_sub_new.channels() != 1)
             cvtColor(img_sub_new, img_sub_new, COLOR_BGR2GRAY);
         preProcess(img_sub_new);

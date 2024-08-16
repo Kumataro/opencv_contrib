@@ -342,7 +342,7 @@ namespace tld {
 				for (int ind = r.start; ind < r.end; ++ind)
 				{
 					resample(detectorF->resized_imgs[detectorF->ensScaleIDs[ind]],
-						Rect2d(detectorF->ensBuffer[ind], initSizeF),
+						Rect2d(static_cast<cv::Point2d>(detectorF->ensBuffer[ind]), initSizeF),
 						detectorF->standardPatches[ind]);
                     std::pair<double, double> values = detectorF->SrAndSc(detectorF->standardPatches[ind]);
                     detectorF->scValues[ind] = values.second;
@@ -532,7 +532,7 @@ namespace tld {
 			uchar *patchesData = stdPatches.data;
 			for (int i = 0; i < (int)ensBuffer.size(); i++)
 			{
-				resample(resized_imgs[ensScaleIDs[i]], Rect2d(ensBuffer[i], initSize), standardPatch);
+				resample(resized_imgs[ensScaleIDs[i]], Rect2d(static_cast<cv::Point2d>(ensBuffer[i]), initSize), standardPatch);
 				uchar *stdPatchData = standardPatch.data;
 				for (int j = 0; j < 225; j++)
 					patchesData[225*i+j] = stdPatchData[j];

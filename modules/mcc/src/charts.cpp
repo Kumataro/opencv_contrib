@@ -60,8 +60,8 @@ void CChart::
     perimetro = perimeter(corners);
     center = mace_center(corners);
 
-    v1 = corners[2] - corners[0];
-    v2 = corners[3] - corners[1];
+    v1 = static_cast<cv::Point>(corners[2] - corners[0]);
+    v2 = static_cast<cv::Point>(corners[3] - corners[1]);
     large_side = std::max(cv::norm(v1), cv::norm(v2));
 }
 
@@ -79,10 +79,10 @@ void CChartDraw::
 
     //Draw lines
     int thickness = 2;
-    cv::line(m_image, (m_pChart).corners[0], (m_pChart).corners[1], color, thickness, LINE_AA);
-    cv::line(m_image, (m_pChart).corners[1], (m_pChart).corners[2], color, thickness, LINE_AA);
-    cv::line(m_image, (m_pChart).corners[2], (m_pChart).corners[3], color, thickness, LINE_AA);
-    cv::line(m_image, (m_pChart).corners[3], (m_pChart).corners[0], color, thickness, LINE_AA);
+    cv::line(m_image, static_cast<cv::Point>((m_pChart).corners[0]), static_cast<cv::Point>((m_pChart).corners[1]), color, thickness, LINE_AA);
+    cv::line(m_image, static_cast<cv::Point>((m_pChart).corners[1]), static_cast<cv::Point>((m_pChart).corners[2]), color, thickness, LINE_AA);
+    cv::line(m_image, static_cast<cv::Point>((m_pChart).corners[2]), static_cast<cv::Point>((m_pChart).corners[3]), color, thickness, LINE_AA);
+    cv::line(m_image, static_cast<cv::Point>((m_pChart).corners[3]), static_cast<cv::Point>((m_pChart).corners[0]), color, thickness, LINE_AA);
 }
 
 void CChartDraw::
@@ -90,7 +90,7 @@ void CChartDraw::
 {
     int radius = 3;
     int thickness = 2;
-    cv::circle(m_image, (m_pChart).center, radius, color, thickness);
+    cv::circle(m_image, static_cast<cv::Point>((m_pChart).center), radius, color, thickness);
 }
 } // namespace mcc
 } // namespace cv

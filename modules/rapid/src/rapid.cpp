@@ -19,7 +19,7 @@ static std::vector<int> getSilhoutteVertices(const Size& imsize, const std::vect
         // Workaround for https://github.com/opencv/opencv/issues/26016
         // To keep its behaviour, pts2d casts to Point_<int>.
         if (img_rect.contains(Point_<int>(pts2d(i)))) {
-            img1(pts2d(i)) = i + 1;
+            img1(static_cast<cv::Point>(pts2d(i))) = i + 1;
         }
     }
 
@@ -93,7 +93,7 @@ void drawWireframe(InputOutputArray img, InputArray _pts2d, InputArray _tris,
 
     for (int i = 0; i < int(tris.total()); i++) {
         const auto& idx = tris(i);
-        std::vector<Point> poly = {pts2d(idx[0]), pts2d(idx[1]), pts2d(idx[2])};
+        std::vector<Point> poly = {static_cast<cv::Point>(pts2d(idx[0])), static_cast<cv::Point>(pts2d(idx[1])), static_cast<cv::Point>(pts2d(idx[2]))};
 
         // skip back facing triangles
         if (cullBackface && ((poly[2] - poly[0]).cross(poly[2] - poly[1]) >= 0))
@@ -192,7 +192,7 @@ void extractLineBundle(int len, InputArray ctl2d, InputArray img, OutputArray bu
         // make it cover L pixels
         n *= len / std::max(std::abs(n.x), std::abs(n.y));
 
-        LineIterator li(_img, contour(i) - n, contour(i) + n);
+        LineIterator li(_img, static_cast<cv::Point>(contour(i) - n), static_cast<cv::Point>(contour(i) + n));
         CV_DbgAssert(li.count == W);
 
         for (int j = 0; j < li.count; j++, ++li) {

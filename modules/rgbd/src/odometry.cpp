@@ -954,7 +954,7 @@ warpFrameImpl(const Mat& image, const Mat& depth, const Mat& mask,
         for (int x = 0; x < image.cols; x++)
         {
             const float transformed_z = transformedCloud_row[x].z;
-            const Point2i p2d = points2d_row[x];
+            const Point2i p2d = static_cast<cv::Point2i>(points2d_row[x]);
             if((!mask_row || mask_row[x]) && transformed_z > 0 && rect.contains(p2d) && /*!cvIsNaN(cloud_row[x].z) && */zBuffer.at<float>(p2d) > transformed_z)
             {
                 warpedImage.at<ImageElemType>(p2d) = image_row[x];

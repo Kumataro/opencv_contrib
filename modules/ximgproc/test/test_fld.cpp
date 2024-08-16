@@ -115,12 +115,12 @@ void FLDBase::GenerateRotatedRect(Mat& image)
 
     Point2f vertices[4];
 
-    RotatedRect rRect = RotatedRect(center, rect_size, angle);
+    RotatedRect rRect = RotatedRect(static_cast<cv::Point2f>(center), rect_size, angle);
 
     rRect.points(vertices);
     for (int i = 0; i < 4; i++)
     {
-        line(image, vertices[i], vertices[(i + 1) % 4], Scalar(255), 3);
+        line(image, static_cast<cv::Point>(vertices[i]), static_cast<cv::Point>(vertices[(i + 1) % 4]), Scalar(255), 3);
     }
 }
 

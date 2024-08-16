@@ -121,7 +121,7 @@ struct AlgoWrap
         double intersectArea = (gtBox & (Rect2d)lastBox).area();
         double unionArea = (gtBox | (Rect2d)lastBox).area();
         numTotal++;
-        numResponse += (lastRes && isGoodBox(lastBox)) ? 1 : 0;
+        numResponse += (lastRes && isGoodBox(static_cast<cv::Rect2d>(lastBox))) ? 1 : 0;
         numPresent += isGoodBox(gtBox) ? 1 : 0;
         double overlap = unionArea > 0. ? intersectArea / unionArea : 0.;
         numCorrect_0 += overlap > 0. ? 1 : 0;
@@ -132,7 +132,7 @@ struct AlgoWrap
         if (isVerbose)
             cout << name << " - " << overlap << endl;
 
-        if (isGoodBox(gtBox) != isGoodBox(lastBox)) lastState = NotFound;
+        if (isGoodBox(gtBox) != isGoodBox(static_cast<cv::Rect2d>(lastBox))) lastState = NotFound;
         else if (overlap > 0.5) lastState = Overlap_0_5;
         else if (overlap > 0.0001) lastState = Overlap_0;
         else lastState = Overlap_None;
@@ -277,13 +277,13 @@ int main(int argc, char **argv)
     Mat frame, image;
     cap >> frame;
     for (vector<AlgoWrap>::iterator i = algos.begin(); i != algos.end(); ++i)
-        i->tracker->init(frame, gt[0]);
+        i->tracker->init(frame, static_cast<cv::Rect>(gt[0]));
 
     // DRAW
     {
         namedWindow(window, WINDOW_AUTOSIZE);
         frame.copyTo(image);
-        rectangle(image, gt[0], gtColor, 2, LINE_8);
+        rectangle(image, static_cast<cv::Rect>(gt[0]), gtColor, 2, LINE_8);
         imshow(window, image);
     }
 
@@ -310,7 +310,7 @@ int main(int argc, char **argv)
             {
                 Point textPoint(1, 16);
                 frame.copyTo(image);
-                rectangle(image, gt[frameId], gtColor, 2, LINE_8);
+                rectangle(image, static_cast<cv::Rect>(gt[frameId]), gtColor, 2, LINE_8);
                 putText(image, "GROUND TRUTH", textPoint, FONT_HERSHEY_PLAIN, 1, gtColor, 1, LINE_AA);
                 for (vector<AlgoWrap>::iterator i = algos.begin(); i != algos.end(); ++i)
                 {

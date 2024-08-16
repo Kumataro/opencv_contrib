@@ -505,7 +505,7 @@ void calcAffineCovariantDescriptors(const Ptr<DescriptorExtractor>& dextractor, 
 
     for (std::vector<Elliptic_KeyPoint>::iterator it = affRegions.begin(); it < affRegions.end(); ++it)
     {
-        Point p = it->pt;
+        Point p = static_cast<cv::Point>(it->pt);
 
         Matx21f size;
         size(0, 0) = size(1, 0) = it->size;
@@ -568,7 +568,7 @@ void calcAffineCovariantDescriptors(const Ptr<DescriptorExtractor>& dextractor, 
         cy = c(1, 0) - roiy;
 
         Mat tmpDesc;
-        KeyPoint kp(Point(int(cx), int(cy)), it->size);
+        KeyPoint kp(static_cast<cv::Point2f>(Point(int(cx), int(cy))), it->size);
 
         std::vector<KeyPoint> k(1, kp);
 

@@ -122,8 +122,8 @@ int main( int argc, const char **argv )
 
   for ( size_t i = 0; i < corr.size(); ++i )
   {
-    const Point2f a = corr[i].first;
-    const Point2f b = corr[i].second;
+    const Point2f a = static_cast<cv::Point2f>(corr[i].first);
+    const Point2f b = static_cast<cv::Point2f>(corr[i].second);
     const Point2f gtDisplacement = gt.at< Point2f >( corr[i].first.y, corr[i].first.x );
 
     // Check that flow vector is correct
@@ -131,11 +131,11 @@ int main( int argc, const char **argv )
     {
       const Point2f c = a + gtDisplacement;
       error += normL2( b - c );
-      circle( dispErr, a, 3, getFlowColor( b - c, false, 32 ), -1 );
+      circle( dispErr, static_cast<cv::Point>(a), 3, getFlowColor( b - c, false, 32 ), -1 );
       ++totalCorrectFlowVectors;
     }
 
-    circle( disp, a, 3, getFlowColor( b - a ), -1 );
+    circle( disp, static_cast<cv::Point>(a), 3, getFlowColor( b - a ), -1 );
   }
 
   if (totalCorrectFlowVectors)

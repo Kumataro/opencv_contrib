@@ -227,7 +227,7 @@ public:
     void motionCompensation(const BackgroundModel& bm, const std::vector<Point2f>& points) {
         for (int i = 0; i < size.height; ++i)
                 for (int j = 0; j < size.width; ++j) {
-                    Point2i p = points[j * size.height + i];
+                    Point2i p = static_cast<cv::Point2i>(points[j * size.height + i]);
                     if (p.x < 0)
                         p.x = 0;
                     if (p.y < 0)

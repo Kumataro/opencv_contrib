@@ -104,10 +104,10 @@ static Mat drawGoodMatches(
     }
     //-- Get the corners from the image_1 ( the object to be "detected" )
     std::vector<Point2f> obj_corners(4);
-    obj_corners[0] = Point(0,0);
-    obj_corners[1] = Point( img1.cols, 0 );
-    obj_corners[2] = Point( img1.cols, img1.rows );
-    obj_corners[3] = Point( 0, img1.rows );
+    obj_corners[0] = static_cast<cv::Point2f>( Point(0,0) );
+    obj_corners[1] = static_cast<cv::Point2f>( Point( img1.cols, 0 ) );
+    obj_corners[2] = static_cast<cv::Point2f>( Point( img1.cols, img1.rows ) );
+    obj_corners[3] = static_cast<cv::Point2f>( Point( 0, img1.rows ) );
     std::vector<Point2f> scene_corners(4);
 
     Mat H = findHomography( obj, scene, RANSAC );
@@ -117,16 +117,16 @@ static Mat drawGoodMatches(
 
     //-- Draw lines between the corners (the mapped object in the scene - image_2 )
     line( img_matches,
-          scene_corners[0] + Point2f( (float)img1.cols, 0), scene_corners[1] + Point2f( (float)img1.cols, 0),
+          static_cast<cv::Point>(scene_corners[0] + Point2f( (float)img1.cols, 0)), static_cast<cv::Point>(scene_corners[1] + Point2f( (float)img1.cols, 0)),
           Scalar( 0, 255, 0), 2, LINE_AA );
     line( img_matches,
-          scene_corners[1] + Point2f( (float)img1.cols, 0), scene_corners[2] + Point2f( (float)img1.cols, 0),
+          static_cast<cv::Point>(scene_corners[1] + Point2f( (float)img1.cols, 0)), static_cast<cv::Point>(scene_corners[2] + Point2f( (float)img1.cols, 0)),
           Scalar( 0, 255, 0), 2, LINE_AA );
     line( img_matches,
-          scene_corners[2] + Point2f( (float)img1.cols, 0), scene_corners[3] + Point2f( (float)img1.cols, 0),
+          static_cast<cv::Point>(scene_corners[2] + Point2f( (float)img1.cols, 0)), static_cast<cv::Point>(scene_corners[3] + Point2f( (float)img1.cols, 0)),
           Scalar( 0, 255, 0), 2, LINE_AA );
     line( img_matches,
-          scene_corners[3] + Point2f( (float)img1.cols, 0), scene_corners[0] + Point2f( (float)img1.cols, 0),
+          static_cast<cv::Point>(scene_corners[3] + Point2f( (float)img1.cols, 0)), static_cast<cv::Point>(scene_corners[0] + Point2f( (float)img1.cols, 0)),
           Scalar( 0, 255, 0), 2, LINE_AA );
     return img_matches;
 }

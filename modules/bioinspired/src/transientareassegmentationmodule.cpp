@@ -528,7 +528,7 @@ void TransientAreasSegmentationModuleImpl::_convertValarrayBuffer2cvMat(const st
         for (unsigned int j=0;j<nbColumns;++j)
         {
             cv::Point2d pixel(j,i);
-            outMat.at<unsigned char>(pixel)=(unsigned char)*(valarrayPTR++);
+            outMat.at<unsigned char>(static_cast<cv::Point>(pixel))=(unsigned char)*(valarrayPTR++);
         }
     }
 }

@@ -85,7 +85,7 @@ public:
     {
         Rect bb;
         bool res = impl->update(image, bb);
-        boundingBox = bb;
+        boundingBox = static_cast<cv::Rect2d>(bb);
         return res;
     }
 };

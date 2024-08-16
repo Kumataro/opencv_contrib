@@ -107,7 +107,7 @@ static void onMouse(int event, int x, int y, int, void*)
 				Mat currentFrame;
 				image.copyTo(currentFrame);
 				for (int i = 0; i < (int)boundingBoxes.size(); i++)
-					rectangle(currentFrame, boundingBoxes[i], Scalar(255, 0, 0), 2, 1);
+					rectangle(currentFrame, static_cast<cv::Rect>(boundingBoxes[i]), Scalar(255, 0, 0), 2, 1);
 				rectangle(currentFrame, Point((int)boundingBox.x, (int)boundingBox.y), Point(x, y), Scalar(255, 0, 0), 2, 1);
 				imshow("Tracking API", currentFrame);
 			}
@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
 	dataset->getNextFrame(frame);
 	frame.copyTo(image);
 	for (int i = 0; i < (int)boundingBoxes.size(); i++)
-		rectangle(image, boundingBoxes[i], Scalar(255, 0, 0), 2, 1);
+		rectangle(image, static_cast<cv::Rect>(boundingBoxes[i]), Scalar(255, 0, 0), 2, 1);
 	imshow("Tracking API", image);
 
 	bool initialized = false;
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 						cout << "Trackers Init Error!!!";
 						return 0;
 					}
-					rectangle(frame, boundingBoxes[i], mt.colors[0], 2, 1);
+					rectangle(frame, static_cast<cv::Rect>(boundingBoxes[i]), mt.colors[0], 2, 1);
 				}
 				initialized = true;
 			}
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 				{
 					for (int i = 0; i < mt.targetNum; i++)
 					{
-						rectangle(frame, mt.boundingBoxes[i], mt.colors[i], 2, 1);
+						rectangle(frame, static_cast<cv::Rect>(mt.boundingBoxes[i]), mt.colors[i], 2, 1);
 					}
 				}
 			}

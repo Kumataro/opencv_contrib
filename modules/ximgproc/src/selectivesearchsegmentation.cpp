@@ -556,7 +556,7 @@ namespace cv {
                         // X, rot
                         Scharr(img_plane_rotated, tmp_gradiant, CV_32F, 1, 0);
 
-                        center = Point((int)(img_plane_rotated.cols / 2.0), (int)(img_plane_rotated.rows / 2.0));
+                        center = static_cast<cv::Point2f>(Point((int)(img_plane_rotated.cols / 2.0), (int)(img_plane_rotated.rows / 2.0)));
                         rot = cv::getRotationMatrix2D(center, -45.0, 1.0);
                         // Using this bigger box avoids clipping the ends of narrow images
                         Rect bbox2 = cv::RotatedRect(center, img_plane_rotated.size(), -45.0).boundingRect();\
@@ -576,7 +576,7 @@ namespace cv {
                         // Y, rot
                         Scharr(img_plane_rotated, tmp_gradiant, CV_32F, 0, 1);
 
-                        center = Point((int)(img_plane_rotated.cols / 2.0), (int)(img_plane_rotated.rows / 2.0));
+                        center = static_cast<cv::Point2f>(Point((int)(img_plane_rotated.cols / 2.0), (int)(img_plane_rotated.rows / 2.0)));
                         rot = cv::getRotationMatrix2D(center, -45.0, 1.0);
                         bbox2 = cv::RotatedRect(center, img_plane_rotated.size(), -45.0).boundingRect();\
                         warpAffine(tmp_gradiant, tmp_rot, rot, bbox2.size());

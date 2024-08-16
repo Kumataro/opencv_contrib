@@ -257,17 +257,17 @@ public:
             {
                 cv::Point2d tmpPoint(col, row);
 
-                if (matchMap.at<cv::Point2i>(tmpPoint) == NO_MATCH)
+                if (matchMap.at<cv::Point2i>(static_cast<cv::Point>(tmpPoint)) == NO_MATCH)
                 {
-                    dispMat.at<float>(tmpPoint) = NAN;
+                    dispMat.at<float>(static_cast<cv::Point>(tmpPoint)) = NAN;
                     continue;
                 }
                 //if a match is found, compute the difference in location of the match and current
                 //pixel.
-                int dx = col-matchMap.at<cv::Point2i>(tmpPoint).x;
-                int dy = row-matchMap.at<cv::Point2i>(tmpPoint).y;
+                int dx = col-matchMap.at<cv::Point2i>(static_cast<cv::Point>(tmpPoint)).x;
+                int dy = row-matchMap.at<cv::Point2i>(static_cast<cv::Point>(tmpPoint)).y;
                 //calculate disparity of current pixel.
-                dispMat.at<float>(tmpPoint) = sqrt(float(dx*dx+dy*dy));
+                dispMat.at<float>(static_cast<cv::Point>(tmpPoint)) = sqrt(float(dx*dx+dy*dy));
             }
         }
     }
@@ -465,8 +465,8 @@ public:
         sMatches.reserve(leftFeatures.size());
         for (uint i=0; i<leftFeatures.size(); i++)
         {
-            tmpMatch.p0 = leftFeatures[i];
-            tmpMatch.p1 = rightFeatures[i];
+            tmpMatch.p0 = static_cast<Point>(leftFeatures[i]);
+            tmpMatch.p1 = static_cast<Point>(rightFeatures[i]);
             sMatches.push_back(tmpMatch);
         }
     }
@@ -598,7 +598,7 @@ public:
 
     cv::Point2f getMatch(const int x, const int y) override
     {
-        return refMap.at<cv::Point2i>(y, x);
+        return static_cast<cv::Point2f>(refMap.at<cv::Point2i>(y, x));
     }
 
     cv::Mat getDisparity() override

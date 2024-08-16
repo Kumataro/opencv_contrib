@@ -97,7 +97,7 @@ int main( int argc, char** argv ){
   for (size_t i = 0; i < ROIs.size(); i++)
   {
       algorithms.push_back(createTrackerByName_legacy(trackingAlg));
-      objects.push_back(ROIs[i]);
+      objects.push_back(static_cast<cv::Rect2d>(ROIs[i]));
   }
 
   // initialize the tracker
@@ -137,7 +137,7 @@ int main( int argc, char** argv ){
 
     // draw the tracked object
     for(unsigned i=0;i<trackers.getObjects().size();i++)
-      rectangle( frame, trackers.getObjects()[i], Scalar( 255, 0, 0 ), 2, 1 );
+      rectangle( frame, static_cast<cv::Rect>(trackers.getObjects()[i]), Scalar( 255, 0, 0 ), 2, 1 );
 
     // draw the processing speed
     sprintf (buffer, "speed: %.0f fps", fps);

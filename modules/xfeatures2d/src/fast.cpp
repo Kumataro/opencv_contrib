@@ -353,7 +353,7 @@ namespace {
             keypoints[keyPointIdx].response = -1;
 
             // Poiter to keyPoint in image
-            Point keyPoint = keypoints[keyPointIdx].pt;
+            Point keyPoint = static_cast<cv::Point>(keypoints[keyPointIdx].pt);
             const uchar* ptr = img.ptr<uchar>(keyPoint.y, keyPoint.x);
 
             // value of the pixel at certain position

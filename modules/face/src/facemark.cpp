@@ -258,7 +258,7 @@ void drawFacemarks(InputOutputArray image, InputArray points, Scalar color){
     Mat img = image.getMat();
     vector<Point2f> pts = points.getMat();
     for(size_t i=0;i<pts.size();i++){
-        circle(img, pts[i],3, color,-1);
+        circle(img, static_cast<cv::Point>(pts[i]),3, color,-1);
     }
 }
 } /* namespace face */

@@ -736,7 +736,7 @@ static void ni_get_descriptor( const double y, const double x, const int orienta
          ix = (int)xx; if( xx - ix > 0.5 ) ix++;
 
          if ( ! Point2f( (float)xx, (float)yy ).inside(
-                Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1 ) )
+                static_cast<cv::Rect2f>(Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1) ) )
             ) continue;
 
          histogram = descriptor + region*_hist_th_q_no;
@@ -777,7 +777,7 @@ static void i_get_descriptor( const double y, const double x, const int orientat
          xx = x + grid.at<double>(2*region + 1);
 
          if ( ! Point2f( (float)xx, (float)yy ).inside(
-                Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1 ) )
+                static_cast<cv::Rect2f>(Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1) ) )
             ) continue;
 
          histogram = descriptor + region*_hist_th_q_no;
@@ -800,7 +800,7 @@ static bool ni_get_descriptor_h( const double y, const double x, const int orien
     pt_H(H, x, y, hx, hy );
 
     if ( ! Point2f( (float)hx, (float)hy ).inside(
-                Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1 ) )
+                static_cast<cv::Rect2f>(Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1) ) )
        ) return false;
 
     int _rad_q_no = (int) layers->size();
@@ -866,7 +866,7 @@ static bool i_get_descriptor_h( const double y, const double x, const int orient
     pt_H( H, x, y, hx, hy );
 
     if ( ! Point2f( (float)hx, (float)hy ).inside(
-                Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1 ) )
+                static_cast<cv::Rect2f>(Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1) ) )
        ) return false;
 
     int _rad_q_no = (int) layers->size();
@@ -902,7 +902,7 @@ static bool i_get_descriptor_h( const double y, const double x, const int orient
          }
 
          if ( ! Point2f( (float)hx, (float)hy ).inside(
-                Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1 ) )
+                static_cast<cv::Rect2f>(Rect( 0, 0, layers->at(0).size[1]-1, layers->at(0).size[0]-1) ) )
             ) continue;
 
          histogram = descriptor + region*_hist_th_q_no;

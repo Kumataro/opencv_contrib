@@ -420,8 +420,8 @@ Point2f TrackerCSRTImpl::estimate_new_position(const Mat &image)
         return Point2f(-1,-1); // target "lost"
 
     // take into account also subpixel accuracy
-    float col = ((float) max_loc.x) + subpixel_peak(resp, "horizontal", max_loc);
-    float row = ((float) max_loc.y) + subpixel_peak(resp, "vertical", max_loc);
+    float col = ((float) max_loc.x) + subpixel_peak(resp, "horizontal", static_cast<cv::Point2f>(max_loc));
+    float row = ((float) max_loc.y) + subpixel_peak(resp, "vertical", static_cast<cv::Point2f>(max_loc));
     if(row + 1 > (float)resp.rows / 2.0f) {
         row = row - resp.rows;
     }
@@ -469,7 +469,7 @@ bool TrackerCSRTImpl::update(InputArray image_, Rect& boundingBox)
     //update tracker
     if(params.use_segmentation) {
         Mat hsv_img = bgr2hsv(image);
-        update_histograms(hsv_img, bounding_box);
+        update_histograms(hsv_img, static_cast<cv::Rect>(bounding_box));
         filter_mask = segment_region(hsv_img, object_center,
                 template_size,original_target_size, current_scale_factor);
         resize(filter_mask, filter_mask, yf.size(), 0, 0, INTER_NEAREST);
@@ -483,7 +483,7 @@ bool TrackerCSRTImpl::update(InputArray image_, Rect& boundingBox)
     }
     update_csr_filter(image, filter_mask);
     dsst.update(image, object_center);
-    boundingBox = bounding_box;
+    boundingBox = static_cast<cv::Rect>(bounding_box);
     return true;
 }
 
@@ -500,7 +500,7 @@ void TrackerCSRTImpl::init(InputArray image_, const Rect& boundingBox)
 
     current_scale_factor = 1.0;
     image_size = image.size();
-    bounding_box = boundingBox;
+    bounding_box = static_cast<cv::Rect2f>(boundingBox);
     cell_size = cvFloor(std::min(4.0, std::max(1.0, static_cast<double>(
         cvCeil((bounding_box.width * bounding_box.height)/400.0)))));
     original_target_size = Size(bounding_box.size());
@@ -546,7 +546,7 @@ void TrackerCSRTImpl::init(InputArray image_, const Rect& boundingBox)
         Mat hsv_img = bgr2hsv(image);
         hist_foreground = Histogram(hsv_img.channels(), params.histogram_bins);
         hist_background = Histogram(hsv_img.channels(), params.histogram_bins);
-        extract_histograms(hsv_img, bounding_box, hist_foreground, hist_background);
+        extract_histograms(hsv_img, static_cast<cv::Rect>(bounding_box), hist_foreground, hist_background);
         filter_mask = segment_region(hsv_img, object_center, template_size,
                 original_target_size, current_scale_factor);
         //update calculated mask with preset mask

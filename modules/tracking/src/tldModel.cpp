@@ -74,7 +74,7 @@ namespace tld {
 			detector->originalVariancePtr = &originalVariance_;
 
 			//Calculate the variance in initial BB
-			originalVariance_ = variance(image(boundingBox));
+			originalVariance_ = variance(image(static_cast<cv::Rect>(boundingBox)));
 			//Find the scale
 			double scale = scaleAndBlur(image, cvRound(log(1.0 * boundingBox.width / (minSize.width)) / log(SCALE_STEP)),
 				scaledImg, blurredImg, GaussBlurKernelSize, SCALE_STEP);

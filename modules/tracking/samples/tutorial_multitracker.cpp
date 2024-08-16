@@ -71,7 +71,7 @@ int main( int argc, char** argv ){
   for (size_t i = 0; i < ROIs.size(); i++)
   {
       algorithms.push_back(createTrackerByName_legacy(trackingAlg));
-      objects.push_back(ROIs[i]);
+      objects.push_back(static_cast<cv::Rect2d>(ROIs[i]));
     }
 
   trackers.add(algorithms,frame,objects);
@@ -95,7 +95,7 @@ int main( int argc, char** argv ){
     //! [result]
     // draw the tracked object
     for(unsigned i=0;i<trackers.getObjects().size();i++)
-      rectangle( frame, trackers.getObjects()[i], Scalar( 255, 0, 0 ), 2, 1 );
+      rectangle( frame, static_cast<cv::Rect>(trackers.getObjects()[i]), Scalar( 255, 0, 0 ), 2, 1 );
     //! [result]
 
     // show image with the tracked object

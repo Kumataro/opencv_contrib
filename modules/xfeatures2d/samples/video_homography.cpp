@@ -47,8 +47,8 @@ namespace
                 Point2f pt_new = query[matches[i].queryIdx].pt;
                 Point2f pt_old = train[matches[i].trainIdx].pt;
 
-                cv::line(img, pt_new, pt_old, Scalar(125, 255, 125), 1);
-                cv::circle(img, pt_new, 2, Scalar(255, 0, 125), 1);
+                cv::line(img, static_cast<cv::Point>(pt_new), static_cast<cv::Point>(pt_old), Scalar(125, 255, 125), 1);
+                cv::circle(img, static_cast<cv::Point>(pt_new), 2, Scalar(255, 0, 125), 1);
 
             }
         }

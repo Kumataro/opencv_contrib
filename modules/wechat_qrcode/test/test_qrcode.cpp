@@ -314,7 +314,7 @@ TEST(Objdetect_QRCode_points_position, rotate45) {
                                  rec.x+rec.width, rec.y,
                                  rec.x+rec.width, rec.y+rec.height,
                                  rec.x, rec.y+rec.height};
-    Mat roiImage = image(rec);
+    Mat roiImage = image(static_cast<cv::Rect>(rec));
     cv::resize(qrImage, roiImage, qrSize, 1., 1., INTER_NEAREST);
 
     vector<Mat> points1;

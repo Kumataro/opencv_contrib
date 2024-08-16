@@ -98,7 +98,7 @@ int main(int argc,char** argv){
             {
                 for(unsigned long i=0;i<faces.size();i++){
                     for(unsigned long k=0;k<shapes[i].size();k++)
-                        cv::circle(img,shapes[i][k],3,cv::Scalar(0,0,255),FILLED);
+                        cv::circle(img,static_cast<cv::Point>(shapes[i][k]),3,cv::Scalar(0,0,255),FILLED);
                 }
             }
         }

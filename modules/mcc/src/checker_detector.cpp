@@ -307,7 +307,7 @@ bool CCheckerDetectorImpl::
                 cv::Point2f topLeft = {xTopLeft, yTopLeft};
                 cv::Point2f bottomRight = {xBottomRight, yBottomRight};
 
-                cv::Rect innerRegion(topLeft, bottomRight);
+                cv::Rect innerRegion(static_cast<cv::Point>(topLeft), static_cast<cv::Point>(bottomRight));
                 cv::Mat innerCroppedImage = croppedImage(innerRegion);
 
 #ifdef MCC_DEBUG
@@ -680,7 +680,7 @@ void CCheckerDetectorImpl::
 
             for (int c = 0; c < 4; c++)
             {
-                cv::Point v = m1.corners[c] - m2.corners[c];
+                cv::Point v = static_cast<cv::Point>(m1.corners[c] - m2.corners[c]);
                 distSquared += v.dot(v);
             }
 
@@ -737,7 +737,7 @@ void CCheckerDetectorImpl::
     {
         chart = detectedCharts[i];
         b0 = chart.large_side * params->B0factor;
-        X[i] = chart.center;
+        X[i] = static_cast<cv::Point>(chart.center);
         W[i] = chart.area;
         B0[i] = b0;
     }
@@ -1054,7 +1054,7 @@ void CCheckerDetectorImpl::
 
             for (int c = 0; c < 4; c++)
             {
-                cv::Point v = m1->getBox()[c] - m2->getBox()[c];
+                cv::Point v = static_cast<cv::Point>(m1->getBox()[c] - m2->getBox()[c]);
                 distSquared += v.dot(v);
             }
 

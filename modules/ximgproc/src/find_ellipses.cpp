@@ -144,9 +144,20 @@ static float valueOfPoints(Point2f p3, Point2f p2, Point2f p1, Point2f p4, Point
             A.at<float>(0, 0) * A.at<float>(1, 0) / (A.at<float>(0, 1) * A.at<float>(1, 1));
     return result;
 }
+static float valueOfPoints(Point _p3, Point _p2, Point _p1, Point _p4, Point _p5, Point _p6) {
+    return valueOfPoints( static_cast<cv::Point2f>(_p3),
+                          static_cast<cv::Point2f>(_p2),
+                          static_cast<cv::Point2f>(_p1),
+                          static_cast<cv::Point2f>(_p4),
+                          static_cast<cv::Point2f>(_p5),
+                          static_cast<cv::Point2f>(_p6) );
+}
 
 static float inline pointDistance2(const Point &A, const Point &B) {
     return float(((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y)));
+}
+static float inline pointDistance2(const Point2f &_A, const Point2f &_B) {
+    return pointDistance2( static_cast<cv::Point>(_A), static_cast<cv::Point>(_B));
 }
 
 static float getMinAnglePI(float alpha, float beta) {

@@ -476,7 +476,7 @@ void CCheckerDrawImpl::draw(InputOutputArray img)
     {
         k = 4 * i;
         for (size_t j = 0; j < 4; j++)
-            cv::line(img, charts[k+j], charts[k+((j + 1) % 4)], m_color, m_thickness, LINE_AA);
+            cv::line(img, static_cast<cv::Point>(charts[k+j]), static_cast<cv::Point>(charts[k+((j + 1) % 4)]), m_color, m_thickness, LINE_AA);
     }
 }
 

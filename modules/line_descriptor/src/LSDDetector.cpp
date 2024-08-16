@@ -191,7 +191,7 @@ void LSDDetector::detectImpl( const Mat& imageSrc, std::vector<KeyLine>& keyline
       kl.lineLength = (float) sqrt( pow( extremes[0] - extremes[2], 2 ) + pow( extremes[1] - extremes[3], 2 ) );
 
       /* compute number of pixels covered by line */
-      LineIterator li( gaussianPyrs[octaveIdx], Point2f( extremes[0], extremes[1] ), Point2f( extremes[2], extremes[3] ) );
+      LineIterator li( gaussianPyrs[octaveIdx], static_cast<cv::Point>(Point2f( extremes[0], extremes[1] )), static_cast<cv::Point>(Point2f( extremes[2], extremes[3] ) ) );
       kl.numOfPixels = li.count;
 
       kl.angle = atan2( ( kl.endPointY - kl.startPointY ), ( kl.endPointX - kl.startPointX ) );

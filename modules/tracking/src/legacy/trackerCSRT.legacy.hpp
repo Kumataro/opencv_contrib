@@ -31,7 +31,7 @@ public:
 
     bool initImpl(const Mat& image, const Rect2d& boundingBox) CV_OVERRIDE
     {
-        impl.init(image, boundingBox);
+        impl.init(image, static_cast<cv::Rect>(boundingBox));
         model = impl.model;
         sampler = makePtr<TrackerContribSampler>();
         featureSet = makePtr<TrackerContribFeatureSet>();
@@ -42,7 +42,7 @@ public:
     {
         Rect bb;
         bool res = impl.update(image, bb);
-        boundingBox = bb;
+        boundingBox = static_cast<cv::Rect2d>(bb);
         return res;
     }
 

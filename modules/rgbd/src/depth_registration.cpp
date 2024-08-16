@@ -223,7 +223,7 @@ namespace rgbd
                     continue;
 
                 //Get integer pixel location
-                const Point2i projectedPixelLocation = projectedPixelFloatLocation;
+                const Point2i projectedPixelLocation = static_cast<cv::Point2i>(projectedPixelFloatLocation);
 
                 // Ensure that the projected point is actually contained in our output image
                 if (!registeredDepthBounds.contains(projectedPixelLocation))

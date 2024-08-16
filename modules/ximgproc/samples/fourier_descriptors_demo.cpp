@@ -60,7 +60,7 @@ int main(void)
         code = waitKey(30);
         if (p.update)
         {
-            Mat r = getRotationMatrix2D(Point(p.xg, p.yg), p.angle, 10.0/ p.scale10);
+            Mat r = getRotationMatrix2D(static_cast<cv::Point2f>(Point(p.xg, p.yg)), p.angle, 10.0/ p.scale10);
             ctrNoisy= NoisyPolygon(ctrRef,static_cast<double>(p.levelNoise));
             cv::transform(ctrNoisy, ctrNoisyRotate, r);
             ctrNoisyRotateShift.clear();
@@ -141,7 +141,7 @@ vector<Point> NoisyPolygon(vector<Point> pRef, double n)
         int next = i + 1;
         if (next == static_cast<int>(p.size()))
             next = 0;
-        Point2d u = p[next] - p[i];
+        Point2d u = static_cast<Point2d>(p[next] - p[i]);
         int d = static_cast<int>(norm(u));
         double a = atan2(u.y, u.x);
         int step = 1;
